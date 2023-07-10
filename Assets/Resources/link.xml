@@ -1,0 +1,11 @@
+<linker>
+<assembly fullname="GraphQL.Client.Abstractions" preserve="all"/>
+<assembly fullname="GraphQL.Client.Abstractions.Websocket" preserve="all"/>
+<assembly fullname="GraphQL.Client.Abstractions" preserve="all"/>
+<assembly fullname="GraphQL.Client.Serializer.Newtonsoft" preserve="all"/>
+<assembly fullname="GraphQL.Client" preserve="all"/>
+<assembly fullname="GraphQL.Primitives" preserve="all"/>
+<assembly fullname="GraphQL.Query.Builder" preserve="all"/>
+<assembly fullname="Newtonsoft.Json" preserve="all"/>
+<assembly fullname="System.Reactive" preserve="all"/>
+</linker>
