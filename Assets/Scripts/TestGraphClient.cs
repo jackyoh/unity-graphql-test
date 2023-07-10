@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 using GraphQL.Client.Http;
 using GraphQL.Client.Serializer.Newtonsoft;
 using GraphQL;
@@ -13,6 +15,7 @@ using GraphQL.Query.Builder;
 
 public class TestGraphClient : MonoBehaviour {
     private string POST_URL = "https://vbc2qnto3za4nare6aa2eygsfu.appsync-api.us-east-1.amazonaws.com/graphql";
+    public TextMeshProUGUI text_dialog;
 
     async void Start() {
 
@@ -56,9 +59,11 @@ public class TestGraphClient : MonoBehaviour {
         var request = new GraphQLRequest(queryString);
         var graphQLResponse = await graphQLClient.SendQueryAsync<ResponseType>(request);
         List<Item> items = graphQLResponse.Data.listTodos.items;
+        string result = "";
         foreach (Item item in items) {
-            Debug.Log(item.id + "   " + item.name);
+            result = result + item.id + "   " + item.name + "\n";
         }
+        text_dialog.text = result;
     }
 }
 
