@@ -18,10 +18,9 @@ public class TestGraphClient : MonoBehaviour {
     public TextMeshProUGUI text_dialog;
 
     async void Start() {
-
-        // https://github.com/charlesdevandiere/graphql-query-builder-dotnet/tree/master
-
-        IQuery<ResponseType> query = new Query<ResponseType>("query test")
+        try {
+            // https://github.com/charlesdevandiere/graphql-query-builder-dotnet/tree/master
+            IQuery<ResponseType> query = new Query<ResponseType>("query test")
             // .AddArguments(new { id = "xxxxxooooo", name = "123..." })
             .AddField(
                 x => x.listTodos,
@@ -31,39 +30,43 @@ public class TestGraphClient : MonoBehaviour {
                           .AddField(n => n.id)
                 )
             );
-        
-        var queryString = query.Build();
-        Debug.Log(queryString);
-        // query test{listTodos{items{name id}}}
+            var queryString = query.Build();
+            Debug.Log(queryString);
+            // query test{listTodos{items{name id}}}
 
-        var httpClient = new HttpClient();
-        httpClient.DefaultRequestHeaders.Add("x-api-key", "da2-q6xouvrjf5dr7aqpnwh4kmorqa");
+            var httpClient = new HttpClient();
+            httpClient.DefaultRequestHeaders.Add("x-api-key", "da2-q6xouvrjf5dr7aqpnwh4kmorqa");
 
-        var options = new GraphQLHttpClientOptions {
-            EndPoint = new Uri(POST_URL)
-        };
-        var graphQLClient = new GraphQLHttpClient(options, new NewtonsoftJsonSerializer(), httpClient);
+            var options = new GraphQLHttpClientOptions {
+                EndPoint = new Uri(POST_URL)
+            };
+            var graphQLClient = new GraphQLHttpClient(options, new NewtonsoftJsonSerializer(), httpClient);
 
-        /*var request = new GraphQLRequest {
-            Query = @"
-                query test {
-                    listTodos {
-                        items {
-                            id
-                            name
+            /*var request = new GraphQLRequest {
+                Query = @"
+                    query test {
+                        listTodos {
+                            items {
+                                id
+                                name
+                            }
                         }
                     }
-                }
-            "
-        };*/
-        var request = new GraphQLRequest(queryString);
-        var graphQLResponse = await graphQLClient.SendQueryAsync<ResponseType>(request);
-        List<Item> items = graphQLResponse.Data.listTodos.items;
-        string result = "";
-        foreach (Item item in items) {
-            result = result + item.id + "   " + item.name + "\n";
+                "
+            };*/
+            
+            var request = new GraphQLRequest(queryString);
+            var graphQLResponse = await graphQLClient.SendQueryAsync<ResponseType>(request);
+            List<Item> items = graphQLResponse.Data.listTodos.items;
+            string result = "";
+            foreach (Item item in items) {
+                result = result + item.id + "   " + item.name + "\n";
+            }
+            text_dialog.text = result;
+
+        } catch (Exception e) {
+            text_dialog.text = e.Message;
         }
-        text_dialog.text = result;
     }
 }
 
