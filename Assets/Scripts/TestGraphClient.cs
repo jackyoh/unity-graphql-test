@@ -8,8 +8,6 @@ using GraphQL.Client.Serializer.Newtonsoft;
 using GraphQL;
 using System;
 using System.Net.Http;
-//using System.Net.Http.Headers;
-//using Newtonsoft.Json;
 using GraphQL.Query.Builder;
 
 
@@ -43,9 +41,6 @@ public class TestGraphClient : MonoBehaviour {
                 EndPoint = new Uri(POST_URL)
             };
             var graphQLClient = new GraphQLHttpClient(options, new NewtonsoftJsonSerializer(), httpClient);
-            
-            var request = new GraphQLRequest(queryString);
-            await graphQLClient.SendQueryAsync<ResponseType>(request);
 
             /*var request = new GraphQLRequest {
                 Query = @"
@@ -60,14 +55,14 @@ public class TestGraphClient : MonoBehaviour {
                 "
             };*/
             
-            /*var request = new GraphQLRequest(queryString);
+            var request = new GraphQLRequest(queryString);
             var graphQLResponse = await graphQLClient.SendQueryAsync<ResponseType>(request);
             List<Item> items = graphQLResponse.Data.listTodos.items;
             string result = "";
             foreach (Item item in items) {
                 result = result + item.id + "   " + item.name + "\n";
             }
-            text_dialog.text = result;*/
+            text_dialog.text = text_dialog.text + "\n" + result;
 
         } catch (Exception e) {
             text_dialog.text = text_dialog.text + "\n" + e.Message;

@@ -27,7 +27,7 @@
         <member name="P:GraphQL.GraphQLError.Extensions">
             <summary>
             The extensions of the error
-            </summary>
+            </summary> 
         </member>
         <member name="M:GraphQL.GraphQLError.Equals(System.Object)">
             <summary>
@@ -132,11 +132,6 @@
         <member name="P:GraphQL.GraphQLRequest.Variables">
             <summary>
             Represents the request variables
-            </summary>
-        </member>
-        <member name="P:GraphQL.GraphQLRequest.Extensions">
-            <summary>
-            Represents the request extensions
             </summary>
         </member>
         <member name="M:GraphQL.GraphQLRequest.Equals(System.Object)">
