@@ -3,21 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-//using GraphQL.Client.Http;
-//using GraphQL.Client.Serializer.Newtonsoft;
-//using GraphQL;
+using GraphQL.Client.Http;
+using GraphQL.Client.Serializer.Newtonsoft;
+using GraphQL;
 using System;
-//using System.Net.Http;
+using System.Net.Http;
 //using System.Net.Http.Headers;
 //using Newtonsoft.Json;
 using GraphQL.Query.Builder;
 
 
 public class TestGraphClient : MonoBehaviour {
-    // private string POST_URL = "https://vbc2qnto3za4nare6aa2eygsfu.appsync-api.us-east-1.amazonaws.com/graphql";
+    private string POST_URL = "https://vbc2qnto3za4nare6aa2eygsfu.appsync-api.us-east-1.amazonaws.com/graphql";
     public TextMeshProUGUI text_dialog;
 
-    void Start() {
+    async void Start() {
         try {
             // https://github.com/charlesdevandiere/graphql-query-builder-dotnet/tree/master
             IQuery<ResponseType> query = new Query<ResponseType>("query test")
@@ -36,13 +36,16 @@ public class TestGraphClient : MonoBehaviour {
 
             // query test{listTodos{items{name id}}}
 
-            /*var httpClient = new HttpClient();
+            var httpClient = new HttpClient();
             httpClient.DefaultRequestHeaders.Add("x-api-key", "da2-q6xouvrjf5dr7aqpnwh4kmorqa");
 
             var options = new GraphQLHttpClientOptions {
                 EndPoint = new Uri(POST_URL)
             };
-            var graphQLClient = new GraphQLHttpClient(options, new NewtonsoftJsonSerializer(), httpClient);*/
+            var graphQLClient = new GraphQLHttpClient(options, new NewtonsoftJsonSerializer(), httpClient);
+            
+            var request = new GraphQLRequest(queryString);
+            await graphQLClient.SendQueryAsync<ResponseType>(request);
 
             /*var request = new GraphQLRequest {
                 Query = @"
@@ -67,7 +70,7 @@ public class TestGraphClient : MonoBehaviour {
             text_dialog.text = result;*/
 
         } catch (Exception e) {
-            text_dialog.text = e.Message;
+            text_dialog.text = text_dialog.text + "\n" + e.Message;
         }
     }
 }
