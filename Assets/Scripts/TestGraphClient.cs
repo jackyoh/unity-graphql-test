@@ -3,21 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using GraphQL.Client.Http;
-using GraphQL.Client.Serializer.Newtonsoft;
-using GraphQL;
+//using GraphQL.Client.Http;
+//using GraphQL.Client.Serializer.Newtonsoft;
+//using GraphQL;
 using System;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using Newtonsoft.Json;
+//using System.Net.Http;
+//using System.Net.Http.Headers;
+//using Newtonsoft.Json;
 using GraphQL.Query.Builder;
 
 
 public class TestGraphClient : MonoBehaviour {
-    private string POST_URL = "https://vbc2qnto3za4nare6aa2eygsfu.appsync-api.us-east-1.amazonaws.com/graphql";
+    // private string POST_URL = "https://vbc2qnto3za4nare6aa2eygsfu.appsync-api.us-east-1.amazonaws.com/graphql";
     public TextMeshProUGUI text_dialog;
 
-    async void Start() {
+    void Start() {
         try {
             // https://github.com/charlesdevandiere/graphql-query-builder-dotnet/tree/master
             IQuery<ResponseType> query = new Query<ResponseType>("query test")
@@ -32,15 +32,17 @@ public class TestGraphClient : MonoBehaviour {
             );
             var queryString = query.Build();
             Debug.Log(queryString);
+            text_dialog.text = queryString;
+
             // query test{listTodos{items{name id}}}
 
-            var httpClient = new HttpClient();
+            /*var httpClient = new HttpClient();
             httpClient.DefaultRequestHeaders.Add("x-api-key", "da2-q6xouvrjf5dr7aqpnwh4kmorqa");
 
             var options = new GraphQLHttpClientOptions {
                 EndPoint = new Uri(POST_URL)
             };
-            var graphQLClient = new GraphQLHttpClient(options, new NewtonsoftJsonSerializer(), httpClient);
+            var graphQLClient = new GraphQLHttpClient(options, new NewtonsoftJsonSerializer(), httpClient);*/
 
             /*var request = new GraphQLRequest {
                 Query = @"
@@ -55,14 +57,14 @@ public class TestGraphClient : MonoBehaviour {
                 "
             };*/
             
-            var request = new GraphQLRequest(queryString);
+            /*var request = new GraphQLRequest(queryString);
             var graphQLResponse = await graphQLClient.SendQueryAsync<ResponseType>(request);
             List<Item> items = graphQLResponse.Data.listTodos.items;
             string result = "";
             foreach (Item item in items) {
                 result = result + item.id + "   " + item.name + "\n";
             }
-            text_dialog.text = result;
+            text_dialog.text = result;*/
 
         } catch (Exception e) {
             text_dialog.text = e.Message;
